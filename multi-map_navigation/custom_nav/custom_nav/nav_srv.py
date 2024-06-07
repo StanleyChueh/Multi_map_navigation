@@ -44,7 +44,7 @@ class NavHandler(Node):
             self.declare_parameter('map_{}.nav_pose.y'.format(str(i)), 0.0)
             self.declare_parameter('map_{}.nav_pose.z'.format(str(i)), 0.0)
             self.declare_parameter('map_{}.nav_pose.yaw'.format(str(i)), 1.0)
-        ###
+        
         self.srv = self.create_service(AddTwoInts, 'id2id', self.id2id_callback)
         self.get_logger().info('service server ready')
         # while True:
