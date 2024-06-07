@@ -1,0 +1,15 @@
+custom_nav:
+  ros__parameters:
+    map_numbers: 2
+    map_0:
+      map_url_param: '/home/stanley/map.yaml'
+      initial_pose: {x: 0.0, y: 0.0, z: 0.0, yaw: 1.0}
+      nav_pose : {x: 1.73 , y: 0.16, z: 0.0, yaw: 1.0}  #x:1.73 y:0.21 z:0.0
+    map_1:
+      map_url_param: '/home/stanley/map1.yaml'
+      initial_pose: {x: 0.25, y: -0.05, z: 0.0, yaw: 1.0} #x:0.25 y:0.0 z:0.0
+      nav_pose : {x: 0.78, y: 0.75, z: 0.0, yaw: 1.0}
+    # map_2:
+    # map_url_param: '/home/csl/Desktop/test_load_map_ws/src/load_map/maps/tsmc_b1_map.yaml'
+    # initial_pose: {x: 155.94, y: 78.79, z: 0.0, yaw: 0.036}
+    # nav_pose : {x: 154.115, y: 80.52, z: 0.0, yaw: 0.036}
