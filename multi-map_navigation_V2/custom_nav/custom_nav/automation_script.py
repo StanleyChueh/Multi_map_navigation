@@ -1,13 +1,15 @@
-import subprocess
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import PoseWithCovarianceStamped
-import threading
+from load_map.sample_navigator import BasicNavigator
+import os
+import time
 
 class AutomatedNavigation(Node):
     def __init__(self):
         super().__init__('automated_navigation')
-        #navigation init
+        # Navigation initialization
+        self.navigator = BasicNavigator()
         self.initial_pose_received = False
         self.navigation_succeeded = False
 
@@ -21,50 +23,56 @@ class AutomatedNavigation(Node):
 
     def initialpose_callback(self, msg):
         self.initial_pose_received = True
-        self.get_logger().info('Initial pose received')
-
-    def navigation_success_callback(self):
-        self.navigation_succeeded = True
-        self.get_logger().info('Navigation succeeded')
+        self.get_logger().info("Initial pose received: {}".format(self.initial_pose_received))
 
     def run_sequence(self):
-        self.run_command('ros2 run custom_nav client 1 0')
+        # Run client 1 0
+        self.get_logger().info('Start !!')
+        self.get_logger().info("Initial pose received: {}".format(self.initial_pose_received))
+        self.get_logger().info("Navigation pose received: {}".format(self.navigation_succeeded))
+        os.system('ros2 run custom_nav client 1 0')
         self.wait_for_initial_pose()
         
-        self.run_command('ros2 run custom_nav client 2 0')
+        # Run client 2 0
+        self.get_logger().info('Start first navigation !!')
+        self.get_logger().info("Initial pose received: {}".format(self.initial_pose_received))
+        self.get_logger().info("Navigation pose received: {}".format(self.navigation_succeeded))
+        os.system('ros2 run custom_nav client 2 0')
         self.wait_for_navigation_success()
-
-        self.run_command('ros2 run custom_nav client 1 1')
-        self.wait_for_initial_pose()
         
-        self.run_command('ros2 run custom_nav client 2 1')
+        if self.navigation_succeeded:
+            self.get_logger().info('Ready to load map2!')
+            self.get_logger().info("Initial pose received: {}".format(self.initial_pose_received))
+            self.get_logger().info("Navigation pose received: {}".format(self.navigation_succeeded))
 
-    def run_command(self, command):
-        self.get_logger().info(f'Running command: {command}')
-        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        def monitor_output():
-            for line in process.stdout:
-                decoded_line = line.decode('utf-8')
-                print(decoded_line, end='')
-                if '[controller_server]: Reached the goal!' in decoded_line or '[bt_navigator]: Navigation succeeded' in decoded_line:
-                    self.navigation_success_callback()
+            # Run client 1 1
+            os.system('ros2 run custom_nav client 1 1')            
             
-        thread = threading.Thread(target=monitor_output)
-        thread.start()
-        process.wait()
-        thread.join() 
-
+        # Run client 2 1
+        #os.system('ros2 run custom_nav client 2 1')
+        
     def wait_for_initial_pose(self):
         self.get_logger().info('Waiting for initial pose...')
         while not self.initial_pose_received:
             rclpy.spin_once(self)
         self.initial_pose_received = False
+        self.get_logger().info("Initial pose received: {}".format(self.initial_pose_received))
 
     def wait_for_navigation_success(self):
         self.get_logger().info('Waiting for navigation success...')
-        while not self.navigation_succeeded:
-            rclpy.spin_once(self)
-        self.navigation_succeeded = False
+        # Add logic to wait for navigation success
+        # For demonstration purposes, assuming it's succeeded after waiting for some time
+        while self.navigator.isNavComplete():
+            time.sleep(1)
+            self.get_logger().info('Navigation fail!')
+            self.get_logger().info("Navigation pose received: {}".format(self.navigation_succeeded))
+            self.get_logger().info("Initial pose received: {}".format(self.initial_pose_received))
+            
+        self.navigation_succeeded = True
+        self.initial_pose_received = False
+        self.get_logger().info('Navigation done!')
+        self.get_logger().info("Navigation pose received: {}".format(self.navigation_succeeded))
+        self.get_logger().info("Initial pose received: {}".format(self.initial_pose_received))
 
 def main(args=None):
     rclpy.init(args=args)
@@ -75,3 +83,4 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
+
