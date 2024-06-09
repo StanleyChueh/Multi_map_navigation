@@ -14,6 +14,7 @@ class AutomatedNavigation(Node):
         self.pose_update_timeout = 5  # seconds
         self.monitoring_amcl = False
 
+        # Subscription
         self.create_subscription(
             PoseWithCovarianceStamped,
             '/initialpose',
@@ -34,33 +35,37 @@ class AutomatedNavigation(Node):
 
     def amclpose_callback(self, msg):
         self.last_amcl_pose_time = time.time()
-        if self.monitoring_amcl:
+        if self.monitoring_amcl: 
             self.get_logger().info('Received amcl_pose message')
 
-    def run_sequence(self):
+    def run_sequence(self): #run 1 0 => 2 0 => 1 1 => 2 1
         # Run client 1 0
         self.get_logger().info('Start!')
         os.system('ros2 run custom_nav client 1 0')
         self.wait_for_initial_pose()
         
         # Run client 2 0
-        time.sleep(1)
+        time.sleep(1) #buffer
         self.get_logger().info('Start first navigation')
         os.system('ros2 run custom_nav client 2 0')
         self.start_amcl_monitoring()
 
-        if self.navigation_succeeded:
+        if self.navigation_succeeded: #Execute only when client 2 0 is done.
+            # Run client 1 1
             self.get_logger().info('Ready to load map2')
             os.system('ros2 run custom_nav client 1 1')  
+            self.wait_for_initial_pose()
+
+            # Run client 2 1
             self.get_logger().info('Start second navigation')
             os.system('ros2 run custom_nav client 2 1')
-            self.start_amcl_monitoring()
+            self.start_amcl_monitoring() #Check whether there is new amcl_pose update for 5 second(amcl_pose been published only when it moves)
 
-    def start_amcl_monitoring(self):
+    def start_amcl_monitoring(self): #Start monitoring amcl_pose topic only when it starts navigation.
         self.monitoring_amcl = True
         self.last_amcl_pose_time = time.time()
-        self.wait_for_navigation_success()
-        self.monitoring_amcl = False
+        self.wait_for_navigation_success() 
+        self.monitoring_amcl = False #If navigation succeed, stop the timer.
 
     def wait_for_initial_pose(self):
         self.get_logger().info('Waiting for initial pose...')
