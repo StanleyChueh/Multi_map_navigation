@@ -7,7 +7,7 @@ import time
 
 class AutomatedNavigation(Node):
     def __init__(self):
-        super().__init__('automated_navigation')
+        super().__init__('manager')
         # Navigation initialization
         self.navigator = BasicNavigator()
         self.initial_pose_received = False

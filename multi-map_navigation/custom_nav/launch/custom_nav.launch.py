@@ -11,7 +11,7 @@ def generate_launch_description():
     'nav_srv.yaml'
     )
     custom_nav_dir = get_package_share_directory('custom_nav')
-    automation_script = os.path.join(custom_nav_dir, 'custom_nav', 'automation_script.py')
+    manager = os.path.join(custom_nav_dir, 'custom_nav', 'manager.py')
 
     return LaunchDescription([
         Node(
@@ -21,7 +21,7 @@ def generate_launch_description():
             parameters=[config],
         ),
         ExecuteProcess(
-            cmd=['python3', automation_script],
+            cmd=['python3', manager],
             output='screen'
         )
     ])

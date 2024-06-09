@@ -16,7 +16,7 @@ setup(
         ('share/' + package_name + '/config', ['config/nav_srv.yaml']),
         # Ensure all python scripts are installed
         ('share/' + package_name + '/custom_nav', [
-            'custom_nav/automation_script.py',
+            'custom_nav/manager.py',
             'custom_nav/nav_srv.py',
             'custom_nav/sample_navigator.py',
             'custom_nav/srv_client_test.py'
@@ -33,7 +33,7 @@ setup(
         'console_scripts': [
             'client = custom_nav.srv_client_test:main',
             'nav_srv = custom_nav.nav_srv:main', 
-            'automated_navigation = custom_nav.automated_navigation:main',  
+            'manager = custom_nav.manager:main',  
         ],
     },
 )
