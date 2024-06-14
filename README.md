@@ -1,6 +1,9 @@
 # Multi_map_navigation
 #### In this project, I aim to navigate through multiple maps, cause in some cases, the map is too large to load in rviz.
+##### Gazebo
 ![Screenshot from 2024-06-08 13-30-25](https://github.com/StanleyChueh/Multi_map_navigation/assets/153347369/ba3b2056-408e-4b4a-90ab-6d97c388b843)
+##### Real world
+![Screenshot from 2024-06-14 17-48-41](https://github.com/StanleyChueh/Multi_map_navigation/assets/153347369/fdf171f1-f1ae-4893-a7ae-81b358fdbe07)
 
 ## Usage 
 ### Set up config file
@@ -55,5 +58,7 @@ ros2 launch custom_nav custom_nav.launch.py
 ## Support
 🤝 Please create an issue on this GitHub for any questions. This allows other people with the same question to find your answer. 🤝
 
-## DEMO(Gazebo)
-https://youtu.be/_x5eRTNBcCU?si=bTipYbon7k8zvZaG
+## DEMO(Gazebo, Real-world deploy)
+Gazebo: https://youtu.be/_x5eRTNBcCU?si=bTipYbon7k8zvZaG
+
+Real world: https://youtu.be/OcK44Jt8AyE
