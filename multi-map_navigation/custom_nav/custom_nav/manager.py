@@ -56,7 +56,9 @@ class AutomatedNavigation(Node):
             os.system('ros2 run custom_nav client 1 1')  
             self.wait_for_initial_pose()
 
+
             # Run client 2 1
+            time.sleep(2)
             self.get_logger().info('Start second navigation')
             os.system('ros2 run custom_nav client 2 1')
             self.start_amcl_monitoring() #Check whether there is new amcl_pose update for 5 second(amcl_pose been published only when it moves)
