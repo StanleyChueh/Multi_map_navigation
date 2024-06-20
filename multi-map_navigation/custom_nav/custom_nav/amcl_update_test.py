@@ -7,7 +7,7 @@ class AmclPoseUpdater(Node):
     def __init__(self):
         super().__init__('amcl_pose_updater')
 
-        # Base pose values(set these values by checking amcl_pose when it's on the right position)
+        # Base pose values(set these values by checking amcl_pose when it's on the right position) 
         self.base_pose = {
             'x': 1.73,
             'y': 0.16,
