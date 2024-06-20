@@ -19,7 +19,8 @@ setup(
             'custom_nav/manager.py',
             'custom_nav/nav_srv.py',
             'custom_nav/sample_navigator.py',
-            'custom_nav/srv_client_test.py'
+            'custom_nav/srv_client_test.py',
+            'custom_nav/amcl_update_test.py',
         ]),
     ],
     install_requires=['setuptools'],
@@ -33,7 +34,9 @@ setup(
         'console_scripts': [
             'client = custom_nav.srv_client_test:main',
             'nav_srv = custom_nav.nav_srv:main', 
-            'manager = custom_nav.manager:main',  
+            'manager = custom_nav.manager:main', 
+            'amcl_pose_updater = custom_nav.amcl_update_test:main',
         ],
     },
 )
+
