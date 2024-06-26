@@ -12,7 +12,6 @@ def generate_launch_description():
     )
     custom_nav_dir = get_package_share_directory('custom_nav')
     manager = os.path.join(custom_nav_dir, 'custom_nav', 'manager.py')
-    amcl_update = os.path.join(custom_nav_dir, 'custom_nav', 'amcl_update_test.py')
     
     return LaunchDescription([
         Node(
