@@ -61,4 +61,4 @@ ros2 launch custom_nav custom_nav.launch.py
 ## DEMO(Gazebo, Real-world deploy)
 Gazebo: https://youtu.be/_x5eRTNBcCU?si=bTipYbon7k8zvZaG
 
-Real world: https://youtu.be/OcK44Jt8AyE
+Real world: https://youtu.be/cTmAIjYQQr8?si=eYbt1TPjzM0RRFgE
